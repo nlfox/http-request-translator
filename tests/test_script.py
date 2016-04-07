@@ -35,7 +35,8 @@ class TestScripts(unittest.TestCase):
         self.python_script = script.PythonScript(headers=self.headers, details=self.details)
         self.bash_script = script.BashScript(headers=self.headers, details=self.details)
         self.php_script = script.PHPScript(headers=self.headers, details=self.details)
-        self.script_list = [self.ruby_script, self.python_script, self.bash_script, self.php_script]
+        self.powershell_script = script.PowerShellScript(headers=self.headers, details=self.details)
+        self.script_list = [self.ruby_script, self.python_script, self.bash_script, self.php_script,self.powershell_script]
 
     def test_generate_search(self):
         for script_name in self.script_list:
@@ -64,6 +65,8 @@ class TestScripts(unittest.TestCase):
                 code_proxy = " -x http://xyz.com:2223"
             elif isinstance(script_name, script.PHPScript):
                 code_proxy = "\ncurl_setopt($ch, CURLOPT_PROXY, 'http://xyz.com:2223');\n"
+            elif isinstance(script_name,script.PowerShellScript):
+                code_proxy = " -Proxy http://xyz.com:2223"
             self.assertEqual(
                 result,
                 code_proxy,
